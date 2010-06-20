@@ -38,7 +38,7 @@ estimated workhours: %s
 """
 
 class Toggl:
-    
+
 
     project_paths = PROJECT_PATHS #TODO make a vim var
     def __init__(self, token):
@@ -98,6 +98,9 @@ class Toggl:
 
         self.save_project()
 
+    def set_current_description(self, description):
+        self.current_task['description'] = description
+
     def auto_project(self):
         """ This will auto create a project based upon a file path """
         for path in self.project_paths:
@@ -123,8 +126,8 @@ class Toggl:
             "billable"     : True,
             "workspace"    : {"id": self.current_project['workspace']['id']},
             "description"  : self.current_task['description'],
-            "start"        : start_time,
-            "stop"         : stop_time,
+            "start"        : "%s -0400" % start_time,
+            "stop"         : "%s -0400" % stop_time,
             "duration"     : (datetime.datetime.strptime(stop_time, "%Y-%m-%dT%H:%M:%S") \
                                - datetime.datetime.strptime(start_time, "%Y-%m-%dT%H:%M:%S")).seconds,
             "created_with" : "toggl.vim"}

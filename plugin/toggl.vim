@@ -11,6 +11,7 @@ else
   finish
 endif
 
+com! -nargs=* TogglSetDescription python toggl.set_current_description(<q-args>)
 au VimEnter * silent let g:toggl_start_time=strftime("%FT%T")
 
 exec "python toggl = Toggl('". g:toggl_api_key ."')"
