@@ -39,6 +39,7 @@ estimated workhours: %s
 
 class Toggl:
 
+    is_active = True
 
     project_paths = PROJECT_PATHS #TODO make a vim var
     def __init__(self, token):
@@ -78,6 +79,9 @@ class Toggl:
             self.current_project=simplejson.load(fp)
             fp.close()
 
+    def set_active(self, state):
+        self.is_active = state
+
     def save_project(self):
         with open(".toggl.%s.json" %(os.getlogin(),), 'w') as fp:
             simplejson.dump(self.current_project,fp)
@@ -113,6 +117,9 @@ class Toggl:
     def send_task(self, start_time, stop_time):
 
         import datetime
+
+        if not self.is_active:
+            return
 
         try:
             self.load_project()

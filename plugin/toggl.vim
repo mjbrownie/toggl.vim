@@ -12,6 +12,9 @@ else
 endif
 
 com! -nargs=* TogglSetDescription python toggl.set_current_description(<q-args>)
+com! -nargs=* TogglActivate python toggl.set_active(True)
+com! -nargs=* TogglDeActivate python toggl.set_active(False)
+
 au VimEnter * silent let g:toggl_start_time=strftime("%FT%T")
 
 exec "python toggl = Toggl('". g:toggl_api_key ."')"
